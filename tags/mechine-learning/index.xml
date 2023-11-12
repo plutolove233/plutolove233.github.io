@@ -1,16 +1,1 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>mechine learning - Tag - yizhigopher的博客</title>
-        <link>http://example.org/tags/mechine-learning/</link>
-        <description>mechine learning - Tag - yizhigopher的博客</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>yizhigopher@163.com (yizhigopher)</managingEditor>
-            <webMaster>yizhigopher@163.com (yizhigopher)</webMaster><lastBuildDate>Thu, 09 Nov 2023 21:59:54 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/mechine-learning/" rel="self" type="application/rss+xml" /><item>
-    <title>pytorch实现线性拟合</title>
-    <link>http://example.org/linear/</link>
-    <pubDate>Thu, 09 Nov 2023 21:59:54 &#43;0800</pubDate>
-    <author>yizhigopher</author>
-    <guid>http://example.org/linear/</guid>
-    <description><![CDATA[安装pytorch 我们以英伟达显卡为例，我们需要知道自己电脑对应cuda版本信息： 在控制台输入nvidia-smi我们可以看到对应cuda版]]></description>
-</item>
-</channel>
-</rss>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>mechine learning - Tag - yizhigopher的博客</title><link>http://plutolove233.github.io/tags/mechine-learning/</link><description>mechine learning - Tag - yizhigopher的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>yizhigopher@163.com (yizhigopher)</managingEditor><webMaster>yizhigopher@163.com (yizhigopher)</webMaster><lastBuildDate>Thu, 09 Nov 2023 21:59:54 +0800</lastBuildDate><atom:link href="http://plutolove233.github.io/tags/mechine-learning/" rel="self" type="application/rss+xml"/><item><title>pytorch实现线性拟合</title><link>http://plutolove233.github.io/linear/</link><pubDate>Thu, 09 Nov 2023 21:59:54 +0800</pubDate><author>yizhigopher</author><guid>http://plutolove233.github.io/linear/</guid><description>安装pytorch 我们以英伟达显卡为例，我们需要知道自己电脑对应cuda版本信息： 在控制台输入nvidia-smi我们可以看到对应cuda版</description></item></channel></rss>
