@@ -1,4 +1,4 @@
-# docker常用命令介绍
+# docker常用命令以及镜像打包
 
 
 ### 基本操作
@@ -57,4 +57,89 @@
 
 ![](./docker-run.png)
 
-需要注意的是我们这个命令相当于启动一个容器并进入容器内部
+需要注意的是我们这个命令相当于启动一个容器并进入容器内部。可以观察到，我们终端的位置发生了变化，从`root@yizhigopher`进入到了容器内部的`/go`目录下，由此也能看出docker的容器也可看成是一个小型的操作系统，在带有bash工具的容器内部，也可以执行一些简单的终端命令，例如`ls`、`cd`等等
+
+既然我们已经学会了如何拉取镜像，如何启动一个容器，那么我们可以学学如何生成一个镜像。
+
+### dockerfile
+
+要实现自己编制一个镜像，我们就得学会dockerfile文件的编写规则。
+
+当然，由于篇幅，这里仅仅提供一些简单的dockerfile文件编写的介绍，学会了这些也就够了，更多详细的说明都可以查看官方文档。
+
+
+
+##### FROM ${IMAGE_NAME}
+
+每个dockerfile都得以`FROM`作为开始，我们自己构建镜像，需要在一个镜像的基础上加以创作。就如同我们平时编写代码一样，我们不可能从0101二进制串来编写代码，我们会借助编译器等基础环境来高效编写程序。
+
+`FROM ${IMAGE_NAME}`的意义十分简单，你可以简答地理解为`docker pull ${IMAGE_NAME}`，我们之后的一切操作都是在这个镜像内部执行的
+
+
+
+##### WORKDIR ${FILE_NAME}
+
+这个是自选的，`WORKDIR`相当于申明一个工作目录，当你的容器运行时，会默认在这个目录下运行。如果这个目录不存在，会自动帮你创建这个目录
+
+
+
+##### COPY ${FILE_PATH} ${CONTAINER_FILE_PATH}
+
+这个步骤会将本地主机下的`${FILE_PATH}`的内容拷贝到容器内部`${CONTAINER_FILE_PATH}`目录下。我们需要注意的是，如果你想拷贝一个文件，那么你需要指明这个文件在容器内部的名字，即：`COPY ./requirement.txt /project/req.txt`。如果你拷贝的是文件夹，那么你同样需要指明这个文件在容器内部的名称。
+
+> 联系一下Linux系统下的mv指令，会有许多相同之处
+
+需要注意的是，有一个`ADD`指令和`COPY`指令十分相似，执行的功能也大致相同，但是`ADD`会自动将压缩文件进行解压，而`MOVE`不行
+
+
+
+##### RUN ${COMMAND}
+
+这个命令会在搭建docker镜像时执行，它会执行`${COMMAND}`命令，通常我们用这条指令来为镜像内容进行修改。例如，我们为python代码进行打包时，会将python源代码`COPY`到镜像内部，然后会执行`RUN pip install -r requirements.txt`来安装相关包从而能够运行python代码
+
+
+
+##### CMD ${COMMAND}
+
+这个部分的命令会在容器启动时执行，需要注意的有几点
+
+1. 你可以写多个CMD，但是只有最后一个CMD会执行
+2. CMD的指令会被`docker run`附带的运行指令覆盖
+3. COMMND的书写格式应写成字符数组的形式，例如`ls -a`需写成`["ls", "-a"]`
+
+
+
+##### ENTRYPOINT ${COMMAND}
+
+这个指令和`CMD`指令十分相似，但是有一点不同，`ENTRYPOINT`不会被`docker run`后的运行指令覆盖，而是会将`docker run`后面的参数传递给`ENTRYPOINT`。具体的示例可看这个博文[Docker从入门到精通——CMD与ENTRYPOINT区别](https://blog.csdn.net/wangwei021933/article/details/124369069)。这里就不再赘述。
+
+
+
+ok我们大概介绍完了`dockerfile`需要了解的地方，现在我们来自己编写个dockerfile试试看吧。随便挑一个文件夹，将所需要的文件内容拷贝到这里，然后在这个文件夹下新建一个`dockerfile`文件（名字就是dockerfile），文件内容如下：
+
+![](./dockerfile.png)
+
+然后在这个文件夹下打开控制台，输入：`docker buuild -t cliffwalk:v1 .`
+
+> docker build表示执行构建镜像
+>
+> -t表示构建的镜像名和镜像tag为cliffwalk:v1
+>
+> 最后的 . 表示使用当前目录下的dockerfile
+
+会出现：
+
+![](./docker-build.png)
+
+当指令结束后，我们使用`docker images`就可以看到构建好的镜像信息
+
+![](./build-res.png)
+
+由于我们最后使用的是`CMD`来表示容器运行的指令，所以，我们可以通过`docker run`的方式来覆盖这条指令来进入容器内部，我们能够看到在`/cliffwalking`目录下，有我们`COPY`进去的文件内容：
+
+![](./container-inner.png)
+
+
+
+至此，我们完成了docker的基本命令和镜像打包的学习，最后一章我们会介绍如何高效的启动运行容器镜像
+
