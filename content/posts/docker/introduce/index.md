@@ -22,31 +22,31 @@ docker可以说是一门技术、一种软件，它能够帮助我们将程序�
 安装docker：
 
 - Windows系统：
-
+  
   在Windows系统，我们需要确保自己的电脑安装了WSL
-
+  
   以管理员身份打开CMD，并敲入：
-
+  
   ```cmd
   wsl --install
   ```
-
+  
   官方文档：[安装 WSL | Microsoft Learn](https://learn.microsoft.com/zh-cn/windows/wsl/install)，可查阅官方文档获得更多的信息。
-
+  
   之后我们前往docker-desktop官方网站[Docker Desktop: The #1 Containerization Tool for Developers | Docker](https://www.docker.com/products/docker-desktop/)下载最新的docker-desktop即可。
-
-  需要注意的是，在使用安装好docker-desktop之后，我们需要修改几个配置
-
+  
+  需要注意的是，在使用安装好的docker-desktop之前，我们需要修改几个配置
+  
   - 调整docker虚拟机的位置，不然根据初始设置，会把C盘占满
-
+    
     ![](./config1.png)
-
+  
   - 修改docker的镜像源信息，不然在docker pull拉取镜像时，会特别慢：
-
+    
     ![](./config2.png)
-
+    
     将其中的内容替换成下述信息：
-
+    
     ```json
     {
       "builder": {
@@ -65,49 +65,50 @@ docker可以说是一门技术、一种软件，它能够帮助我们将程序�
       ]
     }
     ```
+    
     或者直接修改`C:\Users\{{ USERNAME }}\.docker\daemon.json`内容为上述信息，重启docker。
-
+  
   - 判断是否安装成功，在CMD中，敲入：
-
+    
     ```cmd
     docker version
     ```
-
+    
     出现如下信息即可：
-
+    
     ![](./info_win.png)
-
+  
   > docker之所以需要在Linux环境下使用，是源于在使用go进行编写docker时，需要借助Linux系统的Namespace和Cgroup隔离机制，所以我们在Windows上运行docker实质上是在Windows上安装了一个虚拟机WSL，在虚拟机的内部执行docker
 
 - Ubuntu系统：
-
+  
   - 更新索引：`sudo apt-get update`
-
+  
   - 安装：`sudo apt install docker.io`
-
+  
   - 修改镜像源：在`/etc/docker`目录下创建`daemon.json`，在里面添加：
-
+    
     ```json
     {
         "registry-mirrors": [
-        	"http://hub-mirror.c.163.com",
-        	"https://mirror.ccs.tencentyun.com"
-     	]
+            "http://hub-mirror.c.163.com",
+            "https://mirror.ccs.tencentyun.com"
+         ]
     }
     ```
-
+    
     即可
-
+  
   - 判断是否安装成功，在终端输入：`docker --version`，出现
-
+    
     ![](./info_ubuntu.png)
-
+    
     即可
 
 - CentOS/aliyun服务器：
-
+  
   - 卸载旧版（如果你之前没有安装过，可跳过这一步）
-
+    
     ```sh
     yum remove docker \
                       docker-client \
@@ -119,25 +120,23 @@ docker可以说是一门技术、一种软件，它能够帮助我们将程序�
                       docker-engine
     ```
 
-    
+- 安装依赖包：`yum install -y yum-utils`
 
-  - 安装依赖包：`yum install -y yum-utils`
+- 为了防止是从国外的源下载，所以配置阿里云地址：`yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo`
 
-  - 为了防止是从国外的源下载，所以配置阿里云地址：`yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo`
+- 更新依赖：`yum update`
 
-  - 更新依赖：`yum update`
+- 安装docker：`yum install docker-ce docker-ce-cli containerd.io`
 
-  - 安装docker：`yum install docker-ce docker-ce-cli containerd.io`
+- 配置docker镜像源：同样的在`/etc/docker`目录下创建`daemon.json`文件，填入镜像源地址信息即可。
 
-  - 配置docker镜像源：同样的在`/etc/docker`目录下创建`daemon.json`文件，填入镜像源地址信息即可。
+- 启动docker服务：`systemctl start docker`
 
-  - 启动docker服务：`systemctl start docker`
-
-  - 判断是否安装完成：控制台输入`docker info`，看到镜像源信息更改即为安装成功
-
-    ![](./info_centos.png)
-
-    > 当然你可以也可以在其他平台上使用docker info来判断镜像源的地址信息是否成功修改
+- 判断是否安装完成：控制台输入`docker info`，看到镜像源信息更改即为安装成功
+  
+  ![](./info_centos.png)
+  
+  > 当然你可以也可以在其他平台上使用docker info来判断镜像源的地址信息是否成功修改
 
 ### 一些最基本的概念
 
@@ -150,4 +149,5 @@ docker可以说是一门技术、一种软件，它能够帮助我们将程序�
 ### 总结
 
 在这一章中，我们大概介绍了docker的一些基本信息和安装方式，在下一章我们会在ubuntu系统上介绍docker的基本操作。
+
 
