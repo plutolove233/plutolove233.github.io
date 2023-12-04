@@ -2,6 +2,8 @@
 title = 'go语言小技巧--编译约束'
 date = 2023-12-04T19:13:11+08:00
 draft = false
+tags=['golang', 'tips']
+categories=['golang小技巧']
 +++
 
 ### 简介
@@ -25,9 +27,9 @@ package main
 var configArr []string
 
 func main(){
-	for _, v := range configArr {
-		print(v, " ")
-	}
+    for _, v := range configArr {
+        print(v, " ")
+    }
 }
 ```
 
@@ -39,7 +41,7 @@ func main(){
 package main
 
 func init() {
-	configArr = append(configArr, "dev")
+    configArr = append(configArr, "dev")
 }
 ```
 
@@ -49,7 +51,7 @@ func init() {
 package main
 
 func init() {
-	configArr = append(configArr, "test")
+    configArr = append(configArr, "test")
 }
 ```
 
@@ -75,7 +77,7 @@ func init() {
 package main
 
 func init() {
-	configArr = append(configArr, "dev")
+    configArr = append(configArr, "dev")
 }
 ```
 
@@ -85,9 +87,8 @@ func init() {
 package main
 
 func init() {
-	configArr = append(configArr, "test")
+    configArr = append(configArr, "test")
 }
-
 ```
 
 这时，我们直接进行代码编译，能够看到如下效果：
