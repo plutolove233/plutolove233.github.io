@@ -22,9 +22,9 @@ package main
 var configArr []string
 
 func main(){
-	for _, v := range configArr {
-		print(v, " ")
-	}
+    for _, v := range configArr {
+        print(v, " ")
+    }
 }
 ```
 
@@ -36,7 +36,7 @@ func main(){
 package main
 
 func init() {
-	configArr = append(configArr, "dev")
+    configArr = append(configArr, "dev")
 }
 ```
 
@@ -46,7 +46,7 @@ func init() {
 package main
 
 func init() {
-	configArr = append(configArr, "test")
+    configArr = append(configArr, "test")
 }
 ```
 
@@ -72,7 +72,7 @@ func init() {
 package main
 
 func init() {
-	configArr = append(configArr, "dev")
+    configArr = append(configArr, "dev")
 }
 ```
 
@@ -82,9 +82,8 @@ func init() {
 package main
 
 func init() {
-	configArr = append(configArr, "test")
+    configArr = append(configArr, "test")
 }
-
 ```
 
 这时，我们直接进行代码编译，能够看到如下效果：
