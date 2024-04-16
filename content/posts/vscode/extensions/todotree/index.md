@@ -7,7 +7,24 @@ categories: ["vscode插件配置设置"]
 ---
 
 ```json
-    "todo-tree.highlights.defaultHighlight": {
+    "todo-tree.regex.regex": "((%|#|//|<!--|^\\s*\\*)\\s*($TAGS)|^\\s*- \\[ \\])",
+    "todo-tree.regex.regexCaseSensitive": false,
+    "todo-tree.general.tags": [
+        "BUG",
+        "HACK",
+        "FIXME",
+        "TODO",
+        "todo",
+        "bug",
+        "tag",
+        "done",
+        "mark",
+        "test",
+        "update",
+        "[]",
+        "[x]"
+    ],
+    "todo-tree.highlights.defaultHighlight": {
         "background": "#ff9100",
         "foreground": "#ffffff",
         "type": "text",
