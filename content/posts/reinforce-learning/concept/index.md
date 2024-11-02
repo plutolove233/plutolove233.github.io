@@ -1,5 +1,4 @@
 +++
-weight=1
 tags=['RL', 'math']
 categories=['机器学习之路']
 title = '强化学习数学知识总结'

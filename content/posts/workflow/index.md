@@ -1,5 +1,4 @@
 +++
-weight=1
 title = '如何利用GitHub的Action实现hugo项目自动化部署'
 author='yizhigopher'
 date = 2023-11-12T15:39:14+08:00

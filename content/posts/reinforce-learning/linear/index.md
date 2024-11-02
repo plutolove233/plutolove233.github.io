@@ -1,5 +1,4 @@
 +++
-weight=2
 title = 'pytorch实现线性拟合'
 date = 2023-11-09T21:59:54+08:00
 draft = false

@@ -1,10 +1,11 @@
----
-title: "Todotree插件设置"
-date: 2024-01-22T14:48:37+08:00
-draft: false
-tags: ["vscode", "extension"]
-categories: ["vscode插件配置设置"]
----
++++
+weight = 1
+title = "Todotree插件设置"
+date = 2024-01-22T14:48:37+08:00
+draft =  false
+tags = ["vscode", "extension"]
+categories = ["vscode插件配置设置"]
++++
 
 ```json
     "todo-tree.regex.regex": "((%|#|//|<!--|^\\s*\\*)\\s*($TAGS)|^\\s*- \\[ \\])",
