@@ -11,6 +11,7 @@ draft = false
 # Hello World
 学习每个语言的第一步永远是学会如何在控制台打印😊，现在让我们看一下go如何实现`Hello World`：
 ```go
+// main.go
 package main
 
 import "fmt"
@@ -19,6 +20,8 @@ func main(){
     fmt.Println("Hello World!")
 }
 ```
+> 在本文件的目录下，在控制台中执行`go build main.go && main`或`go run main.go`观察控制台输出的结果。
+
 我们逐行分析说明：
 - 第1行使用`package main`申明这是一个主包，我们需要在主包下面定义`func main()`函数，用于声明程序入口。
 - 第3行使用`import`来导入外部包`"fmt"`，该包通常用于实现格式化的I/O操作，这个与C的`<cstdio>`相似。
