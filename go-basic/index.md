@@ -224,7 +224,7 @@ func main() {
 
 关于每次扩容对`cap`修改的策略，可以参考`${GOROOT}/src/runtime/slice.go`的源码，这里就不过多展开。
 ## 字典(map)
-map是一种无序的基于key-value的数据结构，Go语言中的map是**引用类型**，必须初始化才能使用。
+map是一种无序的基于key-value的数据结构，Go语言中的map是**引用类型**，必须**初始化**才能使用。
 ```go
 var stuMap map[string]int
 stuMap = make(map[string]int)
