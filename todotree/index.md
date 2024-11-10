@@ -1,6 +1,15 @@
 # Todotree插件设置
 
 
+在插件中找到Todo Tree，点击设置按钮
+
+![](./todo-plugin.png)
+
+找到在`settings.json`中编辑更多
+
+![](./todo-setting.png)
+
+将上述代码复制到`settings.json`中即可。
 ```json
     "todo-tree.regex.regex": "((%|#|//|<!--|^\\s*\\*)\\s*($TAGS)|^\\s*- \\[ \\])",
     "todo-tree.regex.regexCaseSensitive": false,
@@ -78,6 +87,3 @@
         },
     },
 ```
-
-将上述代码复制到`settings.json`中即可。
-
