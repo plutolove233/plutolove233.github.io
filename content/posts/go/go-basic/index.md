@@ -4,7 +4,7 @@ date = 2024-11-08T15:24:06+08:00
 draft = false
 categories = ["golang之路"]
 tags = ["golang", "study"]
-pre = "/go-basic"
+pre = "/go-hello"
 +++
 
 上一章节我们已经简单介绍了一个最简单的go程序以及关于变量以及常量的定义。本章节将会继续极少go的基础知识。
@@ -230,7 +230,7 @@ func main() {
 
 关于每次扩容对`cap`修改的策略，可以参考`${GOROOT}/src/runtime/slice.go`的源码，这里就不过多展开。
 ## 字典(map)
-map是一种无序的基于key-value的数据结构，Go语言中的map是**引用类型**，必须初始化才能使用。
+map是一种无序的基于key-value的数据结构，Go语言中的map是**引用类型**，必须**初始化**才能使用。
 ```go
 var stuMap map[string]int
 stuMap = make(map[string]int)
