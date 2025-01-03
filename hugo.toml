@@ -4,7 +4,7 @@ baseURL = "http://plutolove233.github.io"
 theme = "LoveIt"
 
 # 网站标题
-title = "yizhigopher的博客"
+title = "二十二画生的博客"
 
 # 网站语言, 仅在这里 CN 大写 ["en", "zh-CN", "fr", "pl", ...]
 languageCode = "zh-CN"
@@ -32,7 +32,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
 
 # 作者配置
 [author]
-  name = "yizhigopher"
+  name = "二十二画生"
   email = "yizhigopher@163.com"
   link = "/about"
 
@@ -77,9 +77,9 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
   #  日期格式
   dateFormat = "2006-01-02"
   # 网站标题, 用于 Open Graph 和 Twitter Cards
-  title = "yizhigopher的网站"
+  title = "二十二画生的网站"
   # 网站描述, 用于 RSS, SEO, Open Graph 和 Twitter Cards
-  description = "变得更强，无线进步"
+  description = "变得更强，无限进步"
   # 网站图片, 用于 Open Graph 和 Twitter Cards
   images = ["/logo.png"]
 
@@ -94,7 +94,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
       # LOGO 的 URL
       logo = "/home.png"
       # 标题名称
-      name = "剑气纵横三万里，一剑光寒十九洲"
+      name = "为了更美好的明天而战"
       # 你可以在名称 (允许 HTML 格式) 之前添加其他信息, 例如图标
       pre = ""
       # 你可以在名称 (允许 HTML 格式) 之后添加其他信息, 例如图标
@@ -183,7 +183,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
       #  主页显示的网站标题 (支持 HTML 格式)
       title = "变得更强，无限进步"
       # 主页显示的网站副标题 (允许 HTML 格式)
-      subtitle = "yizhigoper的个人博客"
+      subtitle = "二十二画生的个人博客"
       # 是否为副标题显示打字机动画
       typeit = true
       # 是否显示社交账号
