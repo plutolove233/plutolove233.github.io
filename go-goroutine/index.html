@@ -1,0 +1,171 @@
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>Go并发 - 二十二画生的博客</title><meta name=Description content="变得更强，无限进步"><meta property="og:title" content="Go并发">
+<meta property="og:description" content="前置知识 串行：指按照一定的顺序完成一组任务。例如会先清洗食材、再对食材切块备份、最后再进行烹饪 并发：指同一时间段内，执行多个任务。比如：可以"><meta property="og:type" content="article"><meta property="og:url" content="http://plutolove233.github.io/go-goroutine/"><meta property="og:image" content="http://plutolove233.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-01-04T14:17:12+08:00"><meta property="article:modified_time" content="2025-01-04T14:17:12+08:00"><meta property="og:site_name" content="二十二画生的网站"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="http://plutolove233.github.io/logo.png"><meta name=twitter:title content="Go并发"><meta name=twitter:description content="前置知识 串行：指按照一定的顺序完成一组任务。例如会先清洗食材、再对食材切块备份、最后再进行烹饪 并发：指同一时间段内，执行多个任务。比如：可以"><meta name=application-name content="我的网站"><meta name=apple-mobile-web-app-title content="我的网站"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/logo.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=http://plutolove233.github.io/go-goroutine/><link rel=prev href=http://plutolove233.github.io/go-error/><link rel=next href=http://plutolove233.github.io/todotree/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Go并发","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"http:\/\/plutolove233.github.io\/go-goroutine\/"},"genre":"posts","keywords":"golang, study","wordcount":2189,"url":"http:\/\/plutolove233.github.io\/go-goroutine\/","datePublished":"2025-01-04T14:17:12+08:00","dateModified":"2025-01-04T14:17:12+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"二十二画生"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=二十二画生的博客><img class="lazyload logo" src=/svg/loading.min.svg data-src=/home.png data-srcset="/home.png, /home.png 1.5x, /home.png 2x" data-sizes=auto alt=/home.png title=/home.png><span id=id-1 class=typeit></span></a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i>
+</a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i>
+</span></span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=二十二画生的博客><img class="lazyload logo" src=/svg/loading.min.svg data-src=/home.png data-srcset="/home.png, /home.png 1.5x, /home.png 2x" data-sizes=auto alt=/home.png title=/home.png><span id=id-2 class=typeit></span></a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i>
+</a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Go并发</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/about title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>二十二画生</a>
+</span>&nbsp;<span class=post-category>included in <a href=/categories/golang%E4%B9%8B%E8%B7%AF/><i class="far fa-folder fa-fw" aria-hidden=true></i>golang之路</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2025-01-04>2025-01-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;2189 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;5 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept=true><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#前置知识>前置知识</a></li><li><a href=#goroutine>goroutine</a></li><li><a href=#channel>channel</a><ul><li><a href=#channel接收和发送数据>channel接收和发送数据</a></li><li><a href=#有缓冲和无缓冲channel之间的区别>有缓冲和无缓冲channel之间的区别</a></li><li><a href=#关闭channel>关闭channel</a></li><li><a href=#for-range接收channel数据>for-range接收channel数据</a></li></ul></li><li><a href=#select多路复用>select多路复用</a></li></ul></nav></div></div><div class=content id=content><h2 id=前置知识>前置知识</h2><ol><li>串行：指按照一定的顺序完成一组任务。例如会先清洗食材、再对食材切块备份、最后再进行烹饪</li><li>并发：指<strong>同一时间段</strong>内，执行多个任务。比如：可以边刷电视剧，边刷课😎</li><li>并行：指<strong>同一时刻</strong>，同时执行多个任务，比如：可以让你的冤种舍友帮你刷课，而你，我的朋友，你就可以专心致志的看电视剧了😜</li><li>进程（process）：程序在操作系统中的一次执行过程，系统进行<strong>资源分配和调度</strong>的一个独立单位。</li><li>线程（thread）：操作系统基于进程开启的轻量级进程，是操作系统<strong>调度执行</strong>的最小单位。</li><li>协程（coroutine）：非操作系统提供而是由用户自行创建和控制的用户态‘线程’，比线程更轻量级。</li></ol><p>了解这些术语，能够对之后Go并发有更加清晰的认识。</p><h2 id=goroutine>goroutine</h2><p>Goroutine是Go并发开发中最基础、最关键的一部分，大量Go程序都会由海量的goroutine构成，以实现并发。</p><p>goroutine是Go的核心，每个go程序至少会包含一个main goroutine，它会在程序启动时，自动创建。</p><p>在Go中，不需要自己实现进程、线程以及协程，当某个功能需要并发访问时，你只需要将其包装成一个函数，并开启一个goroutine执行这个函数就行了，以下是一个简单的开启goroutine实现并发的例子。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>main</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;fmt&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;time&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>work</span><span class=p>(</span><span class=nx>i</span> <span class=kt>int</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>i</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=p>&lt;</span> <span class=mi>10</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>// 创建10个协程，分别打印1～10数字
+</span></span></span><span class=line><span class=cl><span class=c1></span>		<span class=k>go</span> <span class=nf>work</span><span class=p>(</span><span class=nx>i</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 等待2s，避免主协程过早结束
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nx>time</span><span class=p>.</span><span class=nf>Sleep</span><span class=p>(</span><span class=mi>2</span><span class=o>*</span><span class=nx>time</span><span class=p>.</span><span class=nx>Second</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>如上述例子，仅需要使用关键字<code>go</code>，并跟随一个函数，即可实现多协程，上述代码的执行结果是：
+<img class=lazyload src=/svg/loading.min.svg data-src=./result1.png data-srcset="./result1.png, ./result1.png 1.5x, ./result1.png 2x" data-sizes=auto alt=./result1.png title=./result1.png></p><p>当使用<code>go</code>关键字，启动一个协程后，会交由Go运行时（runtime）进行调度，其中涉及到更加底层以及操作系统的知识，推荐大家阅读刘丹冰老师的这篇文章<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>，其中全面的讲解了GMP模型以及协程调度逻辑，这里就不再详细展开了。</p><h2 id=channel>channel</h2><p>单纯创建多个协程在大多数情况下是没有意义的，如何能够在协程之间进行通讯，从而控制多个协程合作完成一项任务，才是并发追求的目标。但是在go中该如何实现协程之间的通讯呢？</p><p>go中采用通信共享而不是采用采用共享内存来实现通信，channel能够在不同的协程建立桥梁，以控制不同的协程。channel可以看作是一种队列，先进先出，仅仅起到一个通信的作用。首先，我们先来看看怎样定义和初始化channel</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>var</span> <span class=nx>ch1</span> <span class=kd>chan</span> <span class=kt>int</span>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>ch2</span> <span class=kd>chan</span> <span class=kd>struct</span><span class=p>{}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nx>ch1</span> <span class=p>=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>chan</span> <span class=kt>int</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nx>ch2</span> <span class=p>=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>chan</span> <span class=kd>struct</span><span class=p>{},</span> <span class=mi>10</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>声明channel变量的格式为<code>var 变量名 chan 元素类型</code>。channel类型变量也得需要初始化后，才能使用，需要注意的是，channel采用make方法进行初始化，并可以设置其缓冲区的大小。</p><h3 id=channel接收和发送数据>channel接收和发送数据</h3><p>在go中，采用箭头符号来实现对channel变量的数据传递，并采用<code>&lt;-</code>实现对channel发送和接收数据的操作，举个例子：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>main</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;fmt&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;time&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>work</span><span class=p>(</span><span class=nx>ch</span> <span class=kd>chan</span> <span class=kt>int</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>data</span><span class=p>,</span> <span class=nx>ok</span> <span class=o>:=</span> <span class=o>&lt;-</span> <span class=nx>ch</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>ok</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>data</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;channel is empty&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>ch</span> <span class=o>:=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>chan</span> <span class=kt>int</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>go</span> <span class=nf>work</span><span class=p>(</span><span class=nx>ch</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nx>ch</span> <span class=o>&lt;-</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>	<span class=nx>time</span><span class=p>.</span><span class=nf>Sleep</span><span class=p>(</span><span class=mi>1</span> <span class=o>*</span> <span class=nx>time</span><span class=p>.</span><span class=nx>Second</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>当<code>&lt;-</code>后跟随channel类型变量时，就是指从channel中接收数据；当<code>&lt;-</code>后跟随channl元素类型一致的变量或数据时，表示向channel发送数据。</p><h3 id=有缓冲和无缓冲channel之间的区别>有缓冲和无缓冲channel之间的区别</h3><p>无缓冲的通道又称为阻塞的通道，无缓冲的通道只有在有接收方<strong>能够</strong>接收值的时候才能发送成功，否则会一直处于<strong>等待发送</strong>的阶段。同理，如果对一个无缓冲通道执行接收操作时，没有任何向通道中发送值的操作那么也会导致接收<strong>操作阻塞</strong>。
+使用无缓冲通道进行通信将导致发送和接收的<code>goroutine</code>同步化。因此，无缓冲通道也被称为同步通道。</p><p>只要通道的容量大于零，那么该通道就属于有缓冲的通道，通道的容量表示通道中最大能存放的元素数量。当通道内已有元素数<strong>达到最大容量</strong>后，再向通道执行发送操作就会<strong>阻塞</strong>，除非有从通道执行接收操作。</p><h3 id=关闭channel>关闭channel</h3><p>当向通道中发送完数据时，我们可以通过<code>close</code>函数来关闭通道。当一个通道被关闭后，再往该通道发送值会引发panic，从该通道取值的操作会先取完通道中的值。通道内的值被接收完后再对通道执行接收操作得到的值会一直都是对应元素类型的零值。并可以通过</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=nx>data</span><span class=p>,</span> <span class=nx>ok</span> <span class=o>:=</span> <span class=o>&lt;-</span> <span class=kd>chan</span> <span class=c1>// 当channel关闭了，ok为false，其余情况均为true
+</span></span></span></code></pre></td></tr></table></div></div><p>来判断channel是否关闭。</p><h3 id=for-range接收channel数据>for-range接收channel数据</h3><p>如果需要通过轮询的方式来从channel中接收数据，通常是以这种方式来实现：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span> <span class=nf>query</span><span class=p>(</span><span class=nx>ch</span> <span class=kd>chan</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>error</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>data</span><span class=p>,</span> <span class=nx>ok</span> <span class=o>:=</span> <span class=o>&lt;-</span> <span class=nx>ch</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>!</span><span class=nx>ok</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=nx>errors</span><span class=p>.</span><span class=nf>New</span><span class=p>(</span><span class=s>&#34;channel is closed!&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>...</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>上述代码可以优化为这样，能够更加简洁，表达的意思也更加清晰：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span> <span class=nf>query</span><span class=p>(</span><span class=nx>ch</span> <span class=kd>chan</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>error</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=nx>data</span><span class=p>,</span> <span class=nx>ok</span> <span class=o>:=</span> <span class=k>range</span> <span class=nx>ch</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>!</span><span class=nx>ok</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=nx>errors</span><span class=p>.</span><span class=nf>New</span><span class=p>(</span><span class=s>&#34;channel is closed!&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>...</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=select多路复用>select多路复用</h2><p>有时会需要从多个channel中接收数据，这时，我们就可以采用select多路复用方式，它可以同时响应多个通道的操作。</p><p><code>select</code>和<code>switch</code>相似，会有<code>case</code>和<code>default</code>分支，使用方法如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=k>for</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>select</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>case</span> <span class=o>&lt;-</span><span class=nx>ch1</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=o>...</span>
+</span></span><span class=line><span class=cl>        <span class=k>case</span> <span class=nx>data</span> <span class=o>:=</span> <span class=o>&lt;-</span><span class=nx>ch2</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=o>...</span>
+</span></span><span class=line><span class=cl>        <span class=k>case</span> <span class=nx>ch3</span> <span class=o>&lt;-</span> <span class=mi>3</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=o>...</span>
+</span></span><span class=line><span class=cl>        <span class=k>default</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=o>...</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Select 语句具有以下特点：</p><ul><li>可处理一个或多个 channel 的发送/接收操作。</li><li>如果多个 case 同时满足，select 会<strong>随机选择</strong>一个执行。</li><li>对于没有 case 的 select 会一直<strong>阻塞</strong>，可用于阻塞 main 函数，防止退出。</li><li>如果存在default分支，且没有case分支满足，则会执行default分支的内容。</li></ul><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p><a href=https://zhuanlan.zhihu.com/p/323271088 target=_blank rel="noopener noreffer">Golang调度器GPM原理与调度全分析——刘丹冰</a>
+&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2025-01-04</span></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/go-goroutine/index.md target=_blank>Read Markdown</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=http://plutolove233.github.io/go-goroutine/ data-title=Go并发 data-hashtags=golang,study><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=http://plutolove233.github.io/go-goroutine/ data-hashtag=golang><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=http://plutolove233.github.io/go-goroutine/ data-title=Go并发><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=http://plutolove233.github.io/go-goroutine/ data-title=Go并发><i data-svg-src=/lib/simple-icons/icons/line.min.svg aria-hidden=true></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=http://plutolove233.github.io/go-goroutine/ data-title=Go并发 data-ralateuid=yizhigopher><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/golang/>golang</a>,&nbsp;<a href=/tags/study/>study</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/go-error/ class=prev rel=prev title="Go Error"><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>Go Error</a>
+<a href=/todotree/ class=next rel=next title=Todotree插件设置>Todotree插件设置<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.120.3">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden=true></i> LoveIt</a></div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2022 - 2025</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/about target=_blank>二十二画生</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/typeit/index.umd.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"id-1":"为了更美好的明天而战","id-2":"为了更美好的明天而战"},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:50,type:"lunr"},typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"id-1":["id-1"],"id-2":["id-2"]},duration:-1,speed:100}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
