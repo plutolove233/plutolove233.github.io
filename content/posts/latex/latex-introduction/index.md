@@ -59,7 +59,7 @@ LaTeX 在 TeX 的基础上提供了更高层次的抽象，使得用户可以更
 
 ### 导言区
 之后我们可以看到许多“引包”指令：
-```
+```latex
 \usepackage{PRIMEarxiv}
 
 \usepackage[utf8]{inputenc} % allow utf-8 input
@@ -92,7 +92,7 @@ LaTeX 在 TeX 的基础上提供了更高层次的抽象，使得用户可以更
 
 ### 标题、作者
 之后，可以定义论文的作者，标题以及致谢部分内容，从这里开始就可以对模板内容进行修改了
-```
+```latex
 %% Title
 \title{A template for Arxiv Style
 %%%% Cite as
@@ -135,7 +135,7 @@ LaTeX 在 TeX 的基础上提供了更高层次的抽象，使得用户可以更
 
 ### 正文
 正文部分定义在如下代码块中：
-```
+```latex
 \begin{document}
 \maketitle %%显示标题和作者
 
@@ -159,7 +159,7 @@ LaTeX 在 TeX 的基础上提供了更高层次的抽象，使得用户可以更
 #### 交叉引用
 交叉引用分为两种，一种是`\ref{}`（这个用来引用书签），另一种是`\cite{}`（这个引用参考文献）。对于`\ref{}`，花括号中写书签名即可。对于`\cite{}`，花括号中写`*.bib`文件中定义的文献名，具体例子可以参考如下：
 其中，`*.bib`文件中：
-```
+```latex
 ……
 @inproceedings{kour2014real, // 这个就是参考文献名
   title={Real-time segmentation of on-line handwritten arabic script},
@@ -172,7 +172,7 @@ LaTeX 在 TeX 的基础上提供了更高层次的抽象，使得用户可以更
 ……
 ```
 `.tex`文件中的内容为：
-```
+```latex
 \begin{document}
 \section{Introduction}\label{sec: 1}
 ...
@@ -184,7 +184,7 @@ Kour et.al\cite{kour2014real} proposed ...
 
 #### 参考文献
 在正文最后，会定义参考文献内容，引用格式模板会定义好，因此只需指明参考文献的名称即可：
-```
+```latex
 \begin{document}
 ...
 %Bibliography
@@ -197,16 +197,20 @@ Kour et.al\cite{kour2014real} proposed ...
 #### 公式
 公式需要用latex语法进行编写，这部分内容多而繁杂，之后会单独进行说明
 > 现在是人工智能时代了，可以写一个公式或者截图，让AI写对应的latex表达式
-```
+```latex
 \begin{equation}
 \xi _{ij}(t)=P(x_{t}=i,x_{t+1}=j|y,v,w;\theta)= {\frac {\alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}{\sum _{i=1}^{N} \sum _{j=1}^{N} \alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}}
 \label{eq: 1} %%如果需要引用，就得加一个label
 \end{equation}
 ```
+此外除了段落公式，还有行内公式，可用`$`对行内公式包裹即可，例如：
+```latex
+... $\mathcal{S}$ is the set of ...
+```
 
 #### 图片
 arxiv的模板中，对于图片是生成的，这里我采用别的一段代码：
-```
+```latex
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1\linewidth]{media/architecture/xxx.pdf} %% 花括号中写该图片在项目中的位置，[]包裹的是控制图片大小，一般只需要修改这个数字就行
@@ -215,7 +219,7 @@ arxiv的模板中，对于图片是生成的，这里我采用别的一段代码
 \end{figure}
 ```
 如果你想要的你的图片跨栏，可以这样子，加个星号就行：
-```
+```latex
 \begin{figure*}[htbp]
     ……
 \end{figure*}
@@ -223,7 +227,7 @@ arxiv的模板中，对于图片是生成的，这里我采用别的一段代码
 
 #### 表格
 表格的定义如下：
-```
+```latex
 \begin{table}
  \caption{Sample table title}
   \centering
@@ -250,7 +254,7 @@ arxiv的模板中，对于图片是生成的，这里我采用别的一段代码
 
 #### 列表
 一般会采用两种列表，一种是有序列表：
-```
+```latex
 \begin{enumerate}
 \item xxx
 \item yyy
@@ -258,7 +262,7 @@ arxiv的模板中，对于图片是生成的，这里我采用别的一段代码
 \end{enumerate}
 ```
 另一种是无序列表：
-```
+```latex
 \begin{itemize}
 \item xxx
 \item yyy
