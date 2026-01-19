@@ -56,28 +56,25 @@ LaTeX 在 TeX 的基础上提供了更高层次的抽象，使得用户可以更
 之后我们可以看到许多“引包”指令：
 ```latex
 \usepackage{PRIMEarxiv}
-
-\usepackage[utf8]{inputenc} % allow utf-8 input
-\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
-\usepackage{hyperref}       % hyperlinks
-\usepackage{url}            % simple URL typesetting
-\usepackage{booktabs}       % professional-quality tables
-\usepackage{amsfonts}       % blackboard math symbols
-\usepackage{nicefrac}       % compact symbols for 1/2, etc.
-\usepackage{microtype}      % microtypography
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{nicefrac}
+\usepackage{microtype}
 \usepackage{lipsum}
-\usepackage{fancyhdr}       % header
-\usepackage{graphicx}       % graphics
-\graphicspath{{media/}}     % organize your images and other figures under media/ folder
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\graphicspath{{media/}}
 
-%Header
 \pagestyle{fancy}
 \thispagestyle{empty}
 \rhead{ \textit{ }} 
 
-% Update your Headers here
 \fancyhead[LO]{Running Title for Header}
-% \fancyhead[RE]{Firstauthor and Secondauthor} % Firstauthor et al. if more than 2 - must use \documentclass[twoside]{article}
+
 ```
 主要作用是对文档的性质做一些设置，或者自定义一些命令，这些包的作用大多是用来显示图片、公式等等。如果后续需要添加其他的package，就需要在这边补充，比如常用的：
 - subfig：用于呈现子图
@@ -88,10 +85,8 @@ LaTeX 在 TeX 的基础上提供了更高层次的抽象，使得用户可以更
 ### 标题、作者
 之后，可以定义论文的作者，标题以及致谢部分内容，从这里开始就可以对模板内容进行修改了
 ```latex
-%% Title
 \title{A template for Arxiv Style
-%%%% Cite as
-%%%% Update your official citation here when published 
+
 \thanks{\textit{\underline{Citation}}: 
 \textbf{Authors. Title. Pages.... DOI:000000/11111.}} 
 }
@@ -102,28 +97,12 @@ LaTeX 在 TeX 的基础上提供了更高层次的抽象，使得用户可以更
   Univ \\
   City\\
   \texttt{\{Author1, Author2\}email@email} \\
-  %% examples of more authors
-   \And
+  \And
   Author3 \\
   Affiliation \\
   Univ \\
   City\\
   \texttt{email@email} \\
-  %% \AND
-  %% Coauthor \\
-  %% Affiliation \\
-  %% Address \\
-  %% \texttt{email} \\
-  %% \And
-  %% Coauthor \\
-  %% Affiliation \\
-  %% Address \\
-  %% \texttt{email} \\
-  %% \And
-  %% Coauthor \\
-  %% Affiliation \\
-  %% Address \\
-  %% \texttt{email} \\
 }
 ```
 可以看到这部分可以定义作者名，单位，地址，邮箱等等，不同的模板，这部分的写法会有所差异。
@@ -135,7 +114,9 @@ LaTeX 在 TeX 的基础上提供了更高层次的抽象，使得用户可以更
 \maketitle %%显示标题和作者
 
 \begin{abstract} %% 定义摘要部分的内容
+
 \lipsum[1] %% 可以将这段生成随机字符的指令换成论文的摘要内容
+
 \end{abstract}
 ...
 \end{document}
@@ -182,9 +163,10 @@ Kour et.al\cite{kour2014real} proposed ...
 ```latex
 \begin{document}
 ...
-%Bibliography
 \bibliographystyle{unsrt} %% 定义了参考文献的格式
+
 \bibliography{references} %% 指明参考文献名，需要和项目文件中的bib文件同名
+
 \end{document}
 ```
 这样在文中引用的参考文献，会自动按照定义的引用格式自动排列参考文献。
@@ -195,7 +177,7 @@ Kour et.al\cite{kour2014real} proposed ...
 ```latex
 \begin{equation}
 \xi _{ij}(t)=P(x_{t}=i,x_{t+1}=j|y,v,w;\theta)= {\frac {\alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}{\sum _{i=1}^{N} \sum _{j=1}^{N} \alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}}
-\label{eq: 1} %%如果需要引用，就得加一个label
+\label{eq: 1}
 \end{equation}
 ```
 此外除了段落公式，还有行内公式，可用`$`对行内公式包裹即可，例如：
@@ -209,7 +191,9 @@ arxiv的模板中，对于图片是生成的，这里我采用别的一段代码
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1\linewidth]{media/architecture/xxx.pdf} %% 花括号中写该图片在项目中的位置，[]包裹的是控制图片大小，一般只需要修改这个数字就行
+
     \caption{momoengegioqg} %% 这个是图片的题注
+    
     \label{fig:background1}
 \end{figure}
 ```
